@@ -61,14 +61,11 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public Integer remove(Integer item) {
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i].equals(item)) {
-                if (i != storage.length - 1) {
-                    System.arraycopy(storage, i + 1, storage, i, size - 1);
-                }
-                size--;
-                return item;
-            }
+        if (indexOf(item) != -1) {
+            System.arraycopy(storage, indexOf(item) + 1, storage, indexOf(item), size - 1);
+            size--;
+            return item;
+
         }
         throw new NotFoundException();
     }
@@ -120,7 +117,7 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public boolean equals(IntegerList otherList) {
-        return Arrays.stream(storage).toArray().equals(otherList.toArray());
+        return Arrays.equals(storage, otherList.toArray());
     }
 
     @Override
